@@ -1,0 +1,7 @@
+name: PrettySigns
+main: com.mcacraft.prettysigns.PrettySigns
+version: 0.3
+
+commands:
+  ps:
+    description: The PrettySigns help menu

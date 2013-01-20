@@ -1,0 +1,39 @@
+############################################################
+# +------------------------------------------------------+ #
+# |                       PrettySigns                    | #
+# +------------------------------------------------------+ #
+############################################################
+
+#Config version - 0.1
+#Developed by Kenny Williams | exload
+#Website: http://mcacraft.com/
+#Forums: http://forums.mcacraft.com/
+#YouTube: http://www.youtube.com/mrcomputeranswers
+#Questions, comments, or bugs, email me: support@mcacraft.com
+
+#Mcstats.org reporting. This information is harmless and simply provides me, the
+#developer, with useful stats on this plugin.
+mcstats: true
+
+#All updates are effective after a restart. By default this is set to false. When set
+#to false the plugin will prompt you to do the command /ps update to fetch the latest build
+#from BukkitDev. If set to true, the plugin will not warn you and will download the update
+#automatically.
+auto-update: false
+
+#Creates a sign at the location that the player died.
+sign-on-death:
+  #Enable feature?
+  enable: false
+  #The text to be displayed on the sign. Only four lines will show. Additional lines
+  #will be ignored. You may remove a line if you wish for the sign to have an empty space.
+  #%player% -> The player who just died
+  #%date% -> The date the player died. Displayed in the format(dd/MM/yyyy)
+  text:
+    - 'RIP'
+    - '%player%'
+    - '%date%'
+    - 'PrettySigns'
+
+#Do NOT mess with this. It WILL break the plugin.
+config-version: 0.2

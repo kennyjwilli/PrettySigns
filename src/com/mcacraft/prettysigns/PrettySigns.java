@@ -1,5 +1,9 @@
 package com.mcacraft.prettysigns;
 
+import com.mcacraft.prettysigns.listeners.SignChange;
+import com.mcacraft.prettysigns.commands.PSCommand;
+import com.mcacraft.prettysigns.listeners.PlayerDeathListener;
+import com.mcacraft.prettysigns.listeners.SignInteract;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,25 +27,40 @@ public class PrettySigns extends JavaPlugin implements Listener
 {
     //Declarations
     Logger log = Logger.getLogger("Minecraft");
-    private BlockListener listener = new BlockListener();
+    
+    private SignChange signChange = new SignChange(this);
     private PluginManager pm = Bukkit.getServer().getPluginManager();
+    private PSCommand psHelp = new PSCommand(this);
+    private PrettySignsAPI psAPI;
+    private SignInteract signInteract;
+    private PlayerDeathListener pdListener;
+    
     public static boolean update = false;
     public static String name = "";
     public static long size = 0;
+    
     ArrayList<String> a = new ArrayList();
     
+    @Override
     public void onEnable()
     {
         //Register commands and events
+        this.signInteract = new SignInteract(this);
+        this.pdListener = new PlayerDeathListener(this);
         registerEvents();
         //Create defualt config file if it does not exist
         createConfig();
+        this.psAPI = new PrettySignsAPI(this);
+        
         PluginDescriptionFile pdf = this.getDescription();
         
         //Check for out of date config file
-        if(!this.getConfig().getString("config-version").equalsIgnoreCase("0.1")){
+        if(!this.getConfig().getString("config-version").equalsIgnoreCase("0.2"))
+        {
+            log.warning("----------------------------------------------------------");
             log.warning("[PrettySigns] Incorrect config.yml version. Re-generate the file to continue.");
-            log.info("[PrettySigns] Disabling PrettySigns ...");
+            log.warning("[PrettySigns] Disabling PrettySigns ...");
+            log.warning("----------------------------------------------------------");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
@@ -76,6 +95,7 @@ public class PrettySigns extends JavaPlugin implements Listener
     }
     
     
+    @Override
     public void onDisable()
     {
         //Not much in here..
@@ -104,9 +124,11 @@ public class PrettySigns extends JavaPlugin implements Listener
     public void registerEvents()
     {
         //registers the events
-        pm.registerEvents(this.listener, this);
+        pm.registerEvents(this.signChange, this);
         pm.registerEvents(this, this);
-        getCommand("ps").setExecutor(new CommandListener(this));
+        pm.registerEvents(this.signInteract, this);
+        pm.registerEvents(this.pdListener, this);
+        getCommand("ps").setExecutor(this.psHelp);
     }
     
     public void createConfig()
@@ -125,5 +147,15 @@ public class PrettySigns extends JavaPlugin implements Listener
     {
         //This function is called from the CommandListener class. getFile() is a protected function.
         net.h31ix.updater.Updater updater = new net.h31ix.updater.Updater(this, "prettysigns", this.getFile(), net.h31ix.updater.Updater.UpdateType.NO_VERSION_CHECK, true);
+    }
+    
+    public JavaPlugin getPlugin()
+    {
+        return this;
+    }
+    
+    public PrettySignsAPI getAPI()
+    {
+        return this.psAPI;
     }
 }

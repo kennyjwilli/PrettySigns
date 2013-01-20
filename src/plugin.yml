@@ -1,6 +1,6 @@
 name: PrettySigns
 main: com.mcacraft.prettysigns.PrettySigns
-version: 0.2
+version: 0.3
 
 commands:
   ps:

@@ -21,5 +21,19 @@ mcstats: true
 #automatically.
 auto-update: false
 
+#Creates a sign at the location that the player died.
+sign-on-death:
+  #Enable feature?
+  enable: false
+  #The text to be displayed on the sign. Only four lines will show. Additional lines
+  #will be ignored. You may remove a line if you wish for the sign to have an empty space.
+  #%player% -> The player who just died
+  #%date% -> The date the player died. Displayed in the format(dd/MM/yyyy)
+  text:
+    - 'RIP'
+    - '%player%'
+    - '%date%'
+    - 'PrettySigns'
+
 #Do NOT mess with this. It WILL break the plugin.
-config-version: 0.1
+config-version: 0.2
